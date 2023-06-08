@@ -43,10 +43,12 @@ public class BookController {
 		bookService.saveBook(book);
 	}
 	
-	@PutMapping("/book/id")
+	@PutMapping("/book/{id}")
 	public ResponseEntity<?> actualizarLibro(@RequestBody Book book, @PathVariable Integer id){
 		try {
 			Book bookExist = bookService.getByIdBook(id);
+			bookExist.setNombre(book.getNombre());
+			bookExist.setPrecio(book.getPrecio());
 			bookService.saveBook(bookExist);
 			return new ResponseEntity<Book>( HttpStatus.OK);
 		} catch (Exception e) {
@@ -54,7 +56,7 @@ public class BookController {
 		}
 	}
 	
-	@DeleteMapping("/book/id")
+	@DeleteMapping("/book/{id}")
 	public void eliminarLibro(@PathVariable Integer id) {
 		bookService.deleteBook(id);
 	}
